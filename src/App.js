@@ -1,8 +1,11 @@
+import ProtoTypes from 'prop-types';
 
-function Food({ name, picture }) {
+
+function Food({ name, picture, rating }) {
   return (
     <div>
-      <h3>I like {name}</h3>
+      <h2>I like {name}</h2>
+      <h4>{rating}/5.0</h4>
       <img src={picture} alt={name}/>
     </div> 
   );
@@ -46,10 +49,16 @@ function App() {
   return ( // html반환
     <div>
       {foodILike.map(dish => (
-        <Food key={dish.id} name={dish.name} picture={dish.image}/>
+        <Food key={dish.id} name={dish.name} picture={dish.image} rating={dish.rating}/>
       ))}
     </div>
   );
 }
+
+Food.prototype ={ 
+  name: ProtoTypes.string.isRequired,
+  picture: ProtoTypes.string.isRequired,
+  rating: ProtoTypes.number 
+};
 
 export default App;
