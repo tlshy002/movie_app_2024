@@ -1,64 +1,26 @@
-import ProtoTypes from 'prop-types';
+import React from "react";
 
-
-function Food({ name, picture, rating }) {
-  return (
-    <div>
-      <h2>I like {name}</h2>
-      <h4>{rating}/5.0</h4>
-      <img src={picture} alt={name}/>
-    </div> 
-  );
-}
-// const foodILike = [ {컴포넌트}, {컴포넌트}, ...]
-const foodILike = [
-  {
-    id: 1,
-    name: 'cat',
-    image: 'https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg',
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: 'dog',
-    image: 'https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg',
-    rating: 4.8,
-  },
-  {
-    id: 3,
-    name: 'hamster',
-    image: '',
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: 'rabbit',
-    image:'',
-    rating: 3.5,
-  },
-  {
-    id: 5,
-    name: 'panda',
-    image: '',
-    rating: 4.5,
+// 클래스형 컴포넌트를 사용하는 이유 => state를 사용하기 위해
+class App extends React.Component {
+  state = {
+    count:0,
   }
-];
+  add = () => {
+    console.log('add');
+  };
+  minus = () => {
+    console.log('minus');
+  };
+  
+  render() {
+    return (
+      <div>
+        <h1>The number is : {this.state.count}</h1>
+        <button>Add</button>
+        <button>Minus</button>
+      </div>
+    
 
-// App컴포넌트를 정의함
-function App() {
-  return ( // html반환
-    <div>
-      {foodILike.map(dish => (
-        <Food key={dish.id} name={dish.name} picture={dish.image} rating={dish.rating}/>
-      ))}
-    </div>
-  );
+    );
+  }
 }
-
-Food.prototype ={ 
-  name: ProtoTypes.string.isRequired,
-  picture: ProtoTypes.string.isRequired,
-  rating: ProtoTypes.number 
-};
-
-export default App;
