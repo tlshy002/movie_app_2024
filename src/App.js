@@ -1,46 +1,44 @@
 import React from "react";
+import axios from 'axios';
+import Movie from './Movies';
 
 // 클래스형 컴포넌트를 사용하는 이유 => state를 사용하기 위해
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log('hello');
-  }
+    state = {
+        isLoading: true,
+        movies: [],
+    };
+    getMovies = async () => {
+        const {
+            data: {
+                data: { movies },
+            },
+        } = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=rating');
+        this.setState({ movies, isLoading: false });
+    }
+    componentDidMount() {
+        this.getMovies();
+    }
 
-  state = {
-    count:0,
-  }
-  add = () => {
-    this.setState(current => ( 
-      {count: current.count + 1,}
-      ));
-  };
-  minus = () => {
-    this.setState(current => (
-      {count: current.count -1,}
-    ));
-  };
-  componentDidMount() {
-    console.log("conmponent rendered");
-  }
-  componentDidUpdate() {
-    console.log('I just update!');
-  }
-  componentWillUnmount() {
-    console.log('Goodbye, cruel world');
-  }
+    render() {
+        const { isLoading, movies } = this.state;
+        return (
+            <div> {isLoading ? 'Loading...' : movies.map((movie) => {
+                console.log(movie);
+                return (
+                    <Movie
+                        key={movie.id}
+                        id={movie.id}
+                        year={movie.year}
+                        title={movie.title}
+                        summary={movie.summary}
+                        poster={movie.medium_cover_image}
+                    />);
+                })};
+            </div>
 
-  render() {
-    console.log("I'm rendering");
-    return (
-      <div>
-        <h1>The number is : {this.state.count}</h1>
-        <button onClick={this.add}>Add</button>
-        <button onClick={this.minus}>Minus</button>
-      </div>
-    
 
-    );
-  }
+        );
+    }
 }
 export default App;
