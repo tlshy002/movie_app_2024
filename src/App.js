@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import Movie from './Movies';
+import './App.css';
 
 // 클래스형 컴포넌트를 사용하는 이유 => state를 사용하기 위해
 class App extends React.Component {
@@ -23,19 +24,27 @@ class App extends React.Component {
     render() {
         const { isLoading, movies } = this.state;
         return (
-            <div> {isLoading ? 'Loading...' : movies.map((movie) => {
-                console.log(movie);
-                return (
-                    <Movie
-                        key={movie.id}
-                        id={movie.id}
-                        year={movie.year}
-                        title={movie.title}
-                        summary={movie.summary}
-                        poster={movie.medium_cover_image}
-                    />);
-                })};
-            </div>
+            <section className="container"> 
+                {isLoading ? (
+                    <div className="loader">
+                        <span className="loader__text">Loading...</span>
+                    </div>
+                    ) : (
+                        <div className="movies">
+                        { movies.map(movie => (
+                        <Movie // App.js에서 API로 값가져온거를 무비컴포넌트에게 props전달
+                            key={movie.id}
+                            id={movie.id}
+                            year={movie.year}
+                            title={movie.title}
+                            summary={movie.summary}
+                            poster={movie.medium_cover_image}
+                            genres={movie.genres}
+                        />
+                    )) }
+                    </div>
+                )}
+            </section>
 
 
         );
